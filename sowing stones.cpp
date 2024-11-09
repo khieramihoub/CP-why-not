@@ -17,7 +17,7 @@ int main() {
     ll hajrat_sum = 0;
 
     for (int i = 0; i < hajrat_m; i++) {
-        hajrat_x[i]--;  // Convert to 0-based index
+        hajrat_x[i]--;  
         hajrat_intervals.push_back({hajrat_x[i], hajrat_a[i]});
         hajrat_sum += hajrat_a[i];
     }
