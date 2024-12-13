@@ -1,0 +1,70 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define KHEIRA ios_base::sync_with_stdio(false);
+#define WAH cin.tie(NULL);
+
+bool wah(int bit, int x, const vector<tuple<string, long long, long long>>& wi) {
+    for (auto& [s, y, z] : wi) {
+        int bitY = (y >> bit) & 1;
+        int bitZ = (z >> bit) & 1;
+        int bitX = x & 1;
+        
+        if (s == "AND" && (bitX & bitY) != bitZ) return false;
+        if (s == "OR" && (bitX | bitY) != bitZ) return false;
+        if (s == "NAND" && ((~(bitX & bitY)) & 1) != bitZ) return false;
+        if (s == "NOR" && ((~(bitX | bitY)) & 1) != bitZ) return false;
+    }
+    return true;
+}
+
+int main() {
+    KHEIRA WAH
+    int n;
+    cin >> n;
+    vector<tuple<string, long long, long long>> wi(n);
+    for (int i = 0; i < n; ++i) {
+        string s;
+        long long y, z;
+        cin >> s >> y >> z;
+        wi[i] = {s, y, z};
+    }
+
+    long long result = 1;
+    for (int bit = 0; bit < 60; ++bit) {
+        bool canBeZero = wah(bit, 0, wi);
+        bool canBeOne = wah(bit, 1, wi);
+        if (!canBeZero && !canBeOne) {
+            result = 0;
+            break;
+        }
+        result *= (canBeZero + canBeOne);
+    }
+
+    cout << result << endl;
+    return 0;
+}
+// K     K     H     H   EEEEE    IIIII     RRRRR         A 
+//  K   K      H     H   E          I       R    R      A  A    
+//  K K        H     H   E          I       R    R     A    A   
+//  KKK        HHHHHHH   EEEEE      I       RRRRR     AAAAAAA
+//  K  K       H     H   E          I       R  R     A       A 
+//  K   K      H     H   E          I       R   R   A         A
+//  K    K     H     H   EEEEE    IIIII     R    R A           A
+//⣿⣿⡿⠋⠄⡀⣿⣿⣿⣿⣿⣿⣿⠿⠛⠋⣉⣉⣉⡉⠙⠻
+//⣿⣿⣇⠔⠈⣿⣿⣿⣿⡿⠛⢉⣤⣶⣾⣿⣿⣿⣿⣿⣿⣦
+//⣿⠃⠄⢠⣾⣿⣿⠟⢁⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+//⣿⣿⣿⣿⣿⠟⢁⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+//⣿⣿⣿⡟⠁⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+//⣿⣿⠋⢠⣾⣿⣿⣿⣿⣿⣿⡿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿
+//⡿⠁⣰⣿⣿⣿⣿⣿⣿⣿⣿⠗⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿
+//⠁⣼⣿⣿⣿⣿⣿⣿⡿⠋⠄⠄⠄⣠⣄⢰⣿⣿⣿⣿⣿⣿
+//⣼⣿⣿⣿⣿⣿⣿⡇⠄⢀⡴⠚⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+//⢰⣿⣿⣿⣿⣿⡿⣿⣿⠴⠋⠄⠄⢸⣿⣿⣿⣿⣿⣿⣿⡟
+//⣿⣿⣿⣿⣿⣿⠃⠈⠁⠄⠄⢀⣴⣿⣿⣿⣿⣿⣿⣿⡟⢀
+//⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⢶⣿⣿⣿⣿⣿⣿⣿⣿⠏⢀⣾
+//⣿⣿⣿⣿⣿⣷⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⠋⣠⣿⣿
+//⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⢁⣼⣿⣿⣿
+//⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⢁⣴⣿⣿⣿⣿⣿
+//⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⢁⣴⣿⣿⣿⠗⠄⠄⣿
+//⠈⠻⣿⣿⣿⣿⣿⣿⠿⠛⣉⣤⣾⣿⣿⣿⣿⣇⠠⠺⣷⣿
+//⣦⣄⣈⣉⣉⣉⣡⣤⣶⣿⣿⣿⣿⣿⣿⣿⠉⠁⣀⣼⣿⣿
