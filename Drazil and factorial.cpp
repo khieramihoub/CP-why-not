@@ -11,7 +11,7 @@ int main() {
    for(char c : x) {
     if (c >= '2' && c <= '9') res += mp[c] ; 
    }
-   sort(res.begin(),res.end()) ; 
+   sort(res.rbegin(),res.rend()) ; 
 cout << res ; 
 
     return 0;
